@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: hello-world-operator-catalog
+spec:
+  sourceType: grpc
+  image: <catalog-image>
+  displayName: Hello World Catalog
+  publisher: creydr
+  updateStrategy:
+    registryPoll:
+      interval: 1m

@@ -1,0 +1,4 @@
+bin/
+__debug_bin
+operator-bundle/*.*.*/
+.vscode/

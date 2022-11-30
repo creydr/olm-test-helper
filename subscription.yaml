@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: hello-world-sub
+spec:
+  channel: <stable>
+  name: hello-world
+  source: hello-world-operator-catalog
+  sourceNamespace: <default>
+  installPlanApproval: Manual

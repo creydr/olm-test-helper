@@ -1,0 +1,77 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+  name: hello-world-operator
+spec:
+  description: This is an operator for hello-world.
+  displayName: Hello World Server Operator
+  keywords:
+    - hello-world
+    - app
+  maintainers:
+    - email: me@example.com
+      name: creydr
+  maturity: alpha
+  provider:
+    name: creydr.
+    url: www.example.com
+  version: 0.0.0-template
+  install:
+    strategy: deployment
+    spec:
+      permissions:
+        - serviceAccountName: hello-world-server-operator
+          rules:
+            - apiGroups:
+                - ""
+              resources:
+                - pods
+              verbs:
+                - '*'
+      clusterPermissions:
+        - serviceAccountName: hello-world-operator
+          rules:
+            - apiGroups:
+                - ""
+              resources:
+                - serviceaccounts
+              verbs:
+                - '*'
+      deployments:
+        - name: hello-world-operator
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: hello-world
+            template:
+              metadata:
+                labels:
+                  app: hello-world
+              spec:
+                containers:
+                  - name: app
+                    image: quay.io/creydr/hello-world-go:0.0.0-template
+                    ports:
+                      - containerPort: 8080
+                    imagePullPolicy: Always
+                    env:
+                      - name: NAME
+                        value: "Chris"
+                    resources:
+                      requests:
+                        memory: "64Mi"
+                        cpu: "250m"
+                      limits:
+                        memory: "128Mi"
+                        cpu: "500m"
+  installModes:
+    - supported: true
+      type: OwnNamespace
+    - supported: true
+      type: SingleNamespace
+    - supported: false
+      type: MultiNamespace
+    - supported: true
+      type: AllNamespaces
